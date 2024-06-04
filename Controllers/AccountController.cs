@@ -326,7 +326,7 @@ namespace DotNetAuth.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("confirmEmail")]
         [Authorize(Policy = "ConfirmEmailPolicy")]
         public async Task<object> ConfirmEmail([FromQuery] string code, [FromServices] IServiceProvider sp)
