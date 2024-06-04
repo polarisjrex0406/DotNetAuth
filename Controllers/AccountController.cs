@@ -86,9 +86,9 @@ namespace DotNetAuth.Controllers
         }
 
         private static ValidationProblem CreateValidationProblem(string errorCode, string errorDescription) =>
-    TypedResults.ValidationProblem(new Dictionary<string, string[]> {
+        TypedResults.ValidationProblem(new Dictionary<string, string[]> {
             { errorCode, [errorDescription] }
-    });
+        });
 
         private static ValidationProblem CreateValidationProblem(IdentityResult result)
         {
@@ -243,7 +243,7 @@ namespace DotNetAuth.Controllers
                 
                 if (result.RequiresTwoFactor)
                 {
-                    if (userManager.GetPhoneNumberAsync(appUser) != null)
+                    if (await userManager.GetPhoneNumberAsync(appUser) != null)
                     {
                         // Send OTP to verification email
                         string otpCode = OtpGenerator.GenerateCode();
@@ -299,7 +299,7 @@ namespace DotNetAuth.Controllers
             var userManager = sp.GetRequiredService<UserManager<IdentityUser>>();
             var appUser = await userManager.FindByEmailAsync(email);
             
-            if (appUser is not null && await userManager.IsEmailConfirmedAsync(appUser))
+            if (appUser is not null)
             {
                 // Send OTP to verification email
                 string otpCode = OtpGenerator.GenerateCode();
