@@ -28,7 +28,7 @@ namespace DotNetAuth.Helpers
                 }),
 
                 // Set the token expiry to a day - This value is only to show
-                Expires = DateTime.Now.AddDays(1),
+                Expires = DateTime.Now.AddHours(1),
                 NotBefore = date,
 
                 // setting the signing credentials

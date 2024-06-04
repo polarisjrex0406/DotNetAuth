@@ -179,17 +179,6 @@ namespace DotNetAuth.Controllers
             }
             else
             {
-                // Check if the user has already gone through the MFA (2FA) process
-                if (await userManager.GetTwoFactorEnabledAsync(appUser) && appUser.PhoneNumberConfirmed)
-                {
-                    // If the user has already completed the MFA, do not allow them to submit their credentials again
-                    return Unauthorized(new
-                    {
-                        success = false,
-                        action = "MFACompleted",
-                        message = "You have already completed the MFA process. Please proceed with the next step."
-                    });
-                }
                 if (await userManager.HasPasswordAsync(appUser))
                 {
                     string token = JWTHelper.GenerateJsonWebToken(appUser, _appSettings, "LoginWithPassword");
@@ -248,18 +237,6 @@ namespace DotNetAuth.Controllers
             }
             else
             {
-                // Check if the user has already gone through the MFA (2FA) process
-                if (await userManager.GetTwoFactorEnabledAsync(appUser) && appUser.PhoneNumberConfirmed)
-                {
-                    // If the user has already completed the MFA, do not allow them to submit their credentials again
-                    return Unauthorized(new
-                    {
-                        success = false,
-                        action = "MFACompleted",
-                        message = "You have already completed the MFA process. Please proceed with the next step."
-                    });
-                }
-
                 var signInManager = sp.GetRequiredService<SignInManager<IdentityUser>>();                
                 var result = await signInManager.PasswordSignInAsync(appUser, password, false, false);
                 string token;
